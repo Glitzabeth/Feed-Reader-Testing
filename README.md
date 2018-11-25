@@ -17,6 +17,7 @@ git clone https://github.com/Glitzabeth/Feed-Reader-Testing.git
 - Jasmine 3.3.0
 - jQuery
 - HTML5 / CSS3
+- JavaScript
 
 
 # Project Overview
