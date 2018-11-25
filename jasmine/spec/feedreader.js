@@ -60,11 +60,12 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+        var body = document.body;
+        var menuIcon = document.querySelector(".menu-icon-link");
 
         // Expect the menu is hidden at first.
-
         it("body has class name 'menu-hidden' at first instance", function () {
-            expect($('.menu-hidden').is(':visible')).toBe(true);
+            expect(body.className).toContain("menu-hidden");
         });
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
@@ -72,14 +73,12 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
           // Expect the menu icon toggles hide/show when clicked ***
-        it('menu visible when clicked', function () {
-            $('a.menu-icon-link').trigger('click');
-            expect($('.menu-hidden').is(':visible')).toBe(false);
-        });
+        it("menu toggles the class 'menu-hidden' when the menu icon is clicked", function() {
+            menuIcon.click();
+            expect(body.className).not.toContain("menu-hidden");
 
-        it('menu hidden when clicked', function () {
-            $('a.menu-icon-link').trigger('click');
-            expect($('.menu-hidden').is(':visible')).toBe(true);
+            menuIcon.click();
+            expect(body.className).toContain("menu-hidden");
         });
     });
 
@@ -104,11 +103,18 @@ $(function() {
         // should at least 1 .entry element in the .feed contianer
         it("there is at least a single feed after loadFeed() is called", function(done) {
             var numberEntries = document.querySelector(".feed").getElementsByClassName("entry").length;
-            expect($('.feed .entry').length).toBeGreaterThan(0);
-
+            expect(numberEntries).toBeGreaterThan(0);
             done();
         });
 
+        // Make sure each (.feed .entry-link) element has valid link
+        it("an entry has a link starting with 'http(s)://'", function(done) {
+            var entries = document.querySelector(".feed").getElementsByClassName("entry-link");
+            for (var i = 0; i < entries.length; i++) {
+                expect(entries[i].href).toMatch(/^(http|https):\/\//);
+            }
+            done();
+        });
     });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
